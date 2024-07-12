@@ -8,7 +8,7 @@ document.getElementById('registrationForm').addEventListener('submit', function(
     const password = document.getElementById('password').value.trim();
     const message = document.getElementById('message');
 
-    // validation for Full name
+    // Validation for Full name
     const nameRegex = /^[A-Za-z\s]+$/;
     if (!nameRegex.test(fullName)) {
         message.style.color = 'red';
@@ -23,11 +23,11 @@ document.getElementById('registrationForm').addEventListener('submit', function(
         return;
     }
 
-    // Mobile number validation (10 digits)
-    const mobileRegex = /^[0-9]{10}$/;
+    // Mobile number validation (10 digits starting with 8, 9, or 7)
+    const mobileRegex = /^[789][0-9]{9}$/;
     if (!mobileRegex.test(mobile)) {
         message.style.color = 'red';
-        message.textContent = 'Mobile number must be 10 digits.';
+        message.textContent = 'Mobile number must be 10 digits and start with 7, 8, or 9.';
         return;
     }
 
@@ -39,11 +39,20 @@ document.getElementById('registrationForm').addEventListener('submit', function(
         return;
     }
 
-    // Password validation at least 8 charecter
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-    if (!passwordRegex.test(password)) {
+    // Password validation (at least 8 characters, containing at least one letter and one number)
+    if (password.length < 8) {
         message.style.color = 'red';
-        message.textContent = 'Password must be at least 8 characters long and contain at least one letter and one number.';
+        message.textContent = 'Password must be at least 8 characters long.';
+        return;
+    }
+    if (!/[A-Za-z]/.test(password)) {
+        message.style.color = 'red';
+        message.textContent = 'Password must contain at least one letter.';
+        return;
+    }
+    if (!/[0-9]/.test(password)) {
+        message.style.color = 'red';
+        message.textContent = 'Password must contain at least one number.';
         return;
     }
 
